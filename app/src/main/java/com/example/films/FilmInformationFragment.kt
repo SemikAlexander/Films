@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.films.databinding.FragmentFilmInformationBinding
-import com.example.films.filmsAPI.API
+import com.example.films.api.API
 import com.example.films.filmsDataClasses.filmsDataClasses
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.DelicateCoroutinesApi

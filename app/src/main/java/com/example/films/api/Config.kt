@@ -1,4 +1,4 @@
-package com.example.films.filmsAPI
+package com.example.films.api
 
 import androidx.viewbinding.BuildConfig
 import okhttp3.OkHttpClient
@@ -25,7 +25,7 @@ val retrofit: Retrofit by lazy {
 
     //retrofit
     Retrofit.Builder()
-        .baseUrl("https://api.themoviedb.org/")
+        .baseUrl("https://api.themoviedb.org/3/")
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .build()

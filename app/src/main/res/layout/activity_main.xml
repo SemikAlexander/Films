@@ -15,18 +15,28 @@
         tools:ignore="UselessParent"/>
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="240dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="240dp"
+        android:id="@+id/internet_error"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="230dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="230dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="invisible"
-        tools:srcCompat="@drawable/ic_signal_wifi_off" />
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/refreshButton"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/internet_error"
+        android:background="@android:color/transparent"
+        android:text="@string/reconnection_button"
+        android:textSize="20sp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

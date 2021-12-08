@@ -1,5 +1,6 @@
 package com.example.films.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.LayoutInflater.*
 import android.view.View
@@ -8,12 +9,14 @@ import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.films.R
 import com.example.films.R.layout.*
 import com.example.films.filmsDataClasses.filmsDataClasses
 
 class ListFilmsAdapters(private val values: List<filmsDataClasses>,
-                        private val listener: OnItemClickListener) :
+                        private val listener: OnItemClickListener,
+                        private val context: Context) :
     RecyclerView.Adapter<ListFilmsAdapters.MyViewHolder>()  {
 
     override fun onCreateViewHolder(
@@ -25,7 +28,9 @@ class ListFilmsAdapters(private val values: List<filmsDataClasses>,
     }
 
     override fun onBindViewHolder(holder: ListFilmsAdapters.MyViewHolder, position: Int) {
-        holder.titleFilm?.text = "The Poseidon Adventure"
+        holder.titleFilm?.text = values[position].title
+
+        Glide.with(context).load(R.drawable.duck).into(holder.logoFilm)
         holder.logoFilm.setImageResource(R.drawable.test)
     }
 
