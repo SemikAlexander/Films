@@ -7,6 +7,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+const val apiToken = "5b9dc5ac55c79590aeae7c3247e0b471"
+
 val retrofit: Retrofit by lazy {
     //logs
     val interceptor = HttpLoggingInterceptor()

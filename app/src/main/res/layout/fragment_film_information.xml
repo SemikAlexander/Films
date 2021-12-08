@@ -6,143 +6,158 @@
     android:layout_height="match_parent"
     tools:context=".FilmInformationFragment"
     android:background="@color/background_color">
-    
+
     <ImageView
-        android:id="@+id/backdrop_logo"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:foreground="@drawable/gradient_shape"
-        android:src="@drawable/test2"
-        android:scaleType="centerCrop"/>
+        android:id="@+id/error_image"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
 
     <RelativeLayout
-        android:id="@+id/logos_layout"
+        android:id="@+id/film_detail_information"
         android:layout_width="wrap_content"
-        android:layout_height="220dp"
-        android:layout_marginTop="70dp">
+        android:layout_height="wrap_content"
+        android:visibility="visible">
 
         <ImageView
-            android:id="@+id/film_logo"
-            android:layout_width="150dp"
+            android:id="@+id/backdrop_logo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:foreground="@drawable/gradient_shape"
+            android:src="@drawable/test2"
+            android:scaleType="centerCrop"/>
+
+        <RelativeLayout
+            android:id="@+id/logos_layout"
+            android:layout_width="wrap_content"
             android:layout_height="220dp"
+            android:layout_marginTop="70dp">
+
+            <ImageView
+                android:id="@+id/film_logo"
+                android:layout_width="150dp"
+                android:layout_height="220dp"
+                android:layout_marginStart="10dp"
+                android:layout_alignParentBottom="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/test" />
+
+            <TextView
+                android:id="@+id/name_film"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/film_logo"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@android:color/white"
+                android:text="The Poseidon Adventure"
+                android:textSize="35sp"/>
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/stats_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logos_layout"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
-            android:layout_alignParentBottom="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/test" />
+            android:layout_marginEnd="10dp">
+
+            <TextView
+                android:id="@+id/runtime_film"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Runtime: 1h 57m"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"/>
+
+            <RatingBar
+                android:id="@+id/rating_film"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:numStars="10"
+                android:theme="@style/MyRatingBar" />
+
+        </FrameLayout>
 
         <TextView
-            android:id="@+id/name_film"
+            android:id="@+id/overview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/film_logo"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@id/stats_info"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:textColor="@android:color/white"
-            android:text="The Poseidon Adventure"
-            android:textSize="35sp"/>
-
-    </RelativeLayout>
-
-    <FrameLayout
-        android:id="@+id/stats_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/logos_layout"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp">
+            android:text="Overview:"
+            android:textSize="20sp"/>
 
         <TextView
-            android:id="@+id/runtime_film"
-            android:layout_width="wrap_content"
+            android:id="@+id/description_film"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
-            android:text="Runtime: 1h 57m"
+            android:layout_below="@id/overview"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="10dp"
             android:textColor="@android:color/white"
+            android:text="When their ocean liner capsizes, a group of passengers struggle to survive and escape."
             android:textSize="15sp"/>
 
-        <RatingBar
-            android:id="@+id/rating_film"
-            style="?android:attr/ratingBarStyleSmall"
+        <TextView
+            android:id="@+id/genres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:numStars="10"
-            android:theme="@style/MyRatingBar" />
+            android:layout_below="@id/description_film"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@android:color/white"
+            android:text="Genres:"
+            android:textSize="20sp"/>
 
-    </FrameLayout>
+        <TextView
+            android:id="@+id/film_genres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/genres"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:text="Action, Adventure, Drama, Thriller"/>
 
-    <TextView
-        android:id="@+id/overview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/stats_info"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:textColor="@android:color/white"
-        android:text="Overview:"
-        android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/companies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/film_genres"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@android:color/white"
+            android:text="Companies:"
+            android:textSize="20sp"/>
 
-    <TextView
-        android:id="@+id/description_film"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/overview"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="10dp"
-        android:textColor="@android:color/white"
-        android:text="When their ocean liner capsizes, a group of passengers struggle to survive and escape."
-        android:textSize="15sp"/>
+        <TextView
+            android:id="@+id/film_companies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/companies"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:text="Kent Productions, 20th Century Fox"/>
 
-    <TextView
-        android:id="@+id/genres"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/description_film"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:textColor="@android:color/white"
-        android:text="Genres:"
-        android:textSize="20sp"/>
 
-    <TextView
-        android:id="@+id/film_genres"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/genres"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="10dp"
-        android:textColor="@android:color/white"
-        android:textSize="15sp"
-        android:text="Action, Adventure, Drama, Thriller"/>
-
-    <TextView
-        android:id="@+id/companies"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/film_genres"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:textColor="@android:color/white"
-        android:text="Companies:"
-        android:textSize="20sp"/>
-
-    <TextView
-        android:id="@+id/film_companies"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/companies"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="10dp"
-        android:textColor="@android:color/white"
-        android:textSize="15sp"
-        android:text="Kent Productions, 20th Century Fox"/>
-
+    </RelativeLayout>
 </RelativeLayout>

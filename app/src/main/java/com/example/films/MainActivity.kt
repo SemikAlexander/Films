@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             supportFragmentManager
                 .beginTransaction()
-                .replace(filmInformation.id, ListFilmsFragment())
+                .replace(filmInformation.id, FilmInformationFragment())
                 .commit()
         }
     }
