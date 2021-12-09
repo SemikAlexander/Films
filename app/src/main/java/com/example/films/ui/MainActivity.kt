@@ -1,13 +1,15 @@
-package com.example.films
+package com.example.films.ui
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.films.R
 import com.example.films.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -35,13 +37,13 @@ class MainActivity : AppCompatActivity() {
     private fun refreshActivity() {
         binding.apply {
             if (checkForInternet(this@MainActivity)) {
-                internetError.visibility = View.INVISIBLE
-                refreshButton.visibility = View.INVISIBLE
+                noInternetInfo.visibility = View.INVISIBLE
                 filmInformation.visibility = View.VISIBLE
 
                 supportFragmentManager
                     .beginTransaction()
-                    .replace(filmInformation.id, FilmInformationFragment())
+                    .replace(filmInformation.id, ListFilmsFragment())
+                    /*.replace(filmInformation.id, FilmInformationFragment())*/
                     .commit()
             } else {
                 filmInformation.visibility = View.INVISIBLE

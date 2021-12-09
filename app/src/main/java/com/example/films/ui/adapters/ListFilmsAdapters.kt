@@ -1,18 +1,16 @@
-package com.example.films.adapters
+package com.example.films.ui.adapters
 
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.LayoutInflater.*
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.films.R
 import com.example.films.R.layout.*
-import com.example.films.filmsDataClasses.filmsDataClasses
+import com.example.films.services.filmsDataClasses.filmsDataClasses
 
 class ListFilmsAdapters(private val values: List<filmsDataClasses>,
                         private val listener: OnItemClickListener,
@@ -22,16 +20,16 @@ class ListFilmsAdapters(private val values: List<filmsDataClasses>,
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ListFilmsAdapters.MyViewHolder {
+    ): MyViewHolder {
         val itemView = from(parent.context).inflate(fragment_list_films, parent, false)
         return MyViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: ListFilmsAdapters.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.titleFilm?.text = values[position].title
 
         Glide.with(context).load(R.drawable.duck).into(holder.logoFilm)
-        holder.logoFilm.setImageResource(R.drawable.test)
+        holder.logoFilm.setImageResource(R.drawable.ic_launcher_foreground)
     }
 
     override fun getItemCount() = values.size

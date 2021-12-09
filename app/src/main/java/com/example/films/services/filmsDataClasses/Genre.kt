@@ -1,4 +1,4 @@
-package com.example.films.filmsDataClasses
+package com.example.films.services.filmsDataClasses
 
 data class Genre(
     val id: Int,

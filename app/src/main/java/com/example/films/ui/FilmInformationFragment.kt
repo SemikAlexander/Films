@@ -1,4 +1,4 @@
-package com.example.films
+package com.example.films.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -7,9 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.example.films.R
 import com.example.films.databinding.FragmentFilmInformationBinding
-import com.example.films.api.API
-import com.example.films.filmsDataClasses.filmsDataClasses
+import com.example.films.services.retrofit.API
+import com.example.films.services.filmsDataClasses.filmsDataClasses
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +38,7 @@ class FilmInformationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            getFilmInfo(552)
+            getFilmInfo(551)
         }
     }
 
@@ -50,9 +51,9 @@ class FilmInformationFragment : Fragment() {
     private fun getFilmInfo(idFilm: Int) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val answer = API.api.getFilmInfo(idFilm).execute()
+                val answer = API.api.getFilmInfo(id = idFilm)
                 launch(Dispatchers.Main) {
-                    filmDataLoaded(answer.body())
+                    filmDataLoaded(answer)
                 }
             } catch (e: Exception) {
                 launch(Dispatchers.Main) {
@@ -76,20 +77,20 @@ class FilmInformationFragment : Fragment() {
 
                 var genresFilm = ""
                 for (i in film.genres.indices)
-                    genresFilm += film.genres[i].name
+                    genresFilm += "${film.genres[i].name}\n"
 
                 filmGenres.text = genresFilm
 
                 var companies = ""
                 for (i in film.production_companies.indices)
-                    companies += film.production_companies[i].name
+                    companies += "${film.production_companies[i].name}\n"
 
                 filmCompanies.text = companies
 
                 var url = "https://image.tmdb.org/t/p/w500${film.poster_path}"
                 Picasso.with(context).load(url).into(filmLogo)
 
-                url = "https://image.tmdb.org/t/p/w500${film.backdrop_path}"
+                url = "https://image.tmdb.org/t/p/w500${film.belongs_to_collection.backdrop_path}"
                 Picasso.with(context).load(url).into(backdropLogo)
             } else {
                 errorImage.visibility = View.VISIBLE

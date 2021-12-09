@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
@@ -17,9 +18,9 @@
             android:id="@+id/film_logo_1"
             android:layout_width="120dp"
             android:layout_height="200dp"
-            android:src="@drawable/test"
+            android:layout_centerHorizontal="true"
             android:scaleType="centerCrop"
-            android:layout_centerHorizontal="true"/>
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/title_film_1"

@@ -1,9 +1,9 @@
-package com.example.films.filmsDataClasses
+package com.example.films.services.filmsDataClasses
 
 data class filmsDataClasses(
     val adult: Boolean,
     val backdrop_path: String,
-    val belongs_to_collection: Any,
+    val belongs_to_collection: BelongsToCollection,
     val budget: Int,
     val genres: List<Genre>,
     val homepage: String,

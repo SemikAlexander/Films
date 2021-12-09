@@ -1,4 +1,4 @@
-package com.example.films.filmsDataClasses
+package com.example.films.services.filmsDataClasses
 
 data class ProductionCountry(
     val iso_3166_1: String,

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FilmInformationFragment"
+    tools:context=".ui.FilmInformationFragment"
     android:background="@color/background_color">
 
     <ImageView
@@ -25,8 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:foreground="@drawable/gradient_shape"
-            android:src="@drawable/test2"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <RelativeLayout
             android:id="@+id/logos_layout"
@@ -38,10 +38,10 @@
                 android:id="@+id/film_logo"
                 android:layout_width="150dp"
                 android:layout_height="220dp"
-                android:layout_marginStart="10dp"
                 android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test" />
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/name_film"

@@ -1,4 +1,4 @@
-package com.example.films.api
+package com.example.films.services.retrofit
 
 import androidx.viewbinding.BuildConfig
 import okhttp3.OkHttpClient
