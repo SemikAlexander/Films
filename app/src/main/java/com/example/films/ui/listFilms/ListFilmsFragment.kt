@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.films.core.CoreModuleDependencies
+import com.example.films.core.DaggerLobbyComponent
 import com.example.films.core.ViewState
 import com.example.films.databinding.FragmentListFilmsBinding
 import com.example.films.services.retrofit.filmsDataClasses.FilmsDataClasses
 import com.example.films.ui.adapters.ListFilmsAdapters
-import kotlinx.coroutines.DelicateCoroutinesApi
+import dagger.hilt.android.EntryPointAccessors
 import javax.inject.Inject
 
 class ListFilmsFragment : Fragment() {
@@ -28,6 +30,19 @@ class ListFilmsFragment : Fragment() {
     @Inject
     lateinit var viewModel: ListFilmsViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val coreModuleDependencies = EntryPointAccessors.fromApplication(
+            requireContext().applicationContext,
+            CoreModuleDependencies::class.java
+        )
+
+        DaggerLobbyComponent.factory().create(
+            coreComponentDependencies = coreModuleDependencies,
+            fragment = this
+        )
+            .inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +52,6 @@ class ListFilmsFragment : Fragment() {
         return binding.root
     }
 
-    @DelicateCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

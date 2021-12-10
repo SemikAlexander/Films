@@ -11,7 +11,9 @@ import com.bumptech.glide.Glide
 import com.example.films.R
 import com.example.films.databinding.ActivityMainBinding
 import com.example.films.ui.listFilms.ListFilmsFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
@@ -53,19 +55,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-    /*override fun onFilmSelected(film: FilmsDataClasses) {
-        binding.apply {
-
-            *//*val detailsFragment =
-                FilmInformationFragment.newInstance(FilmsDataClasses)*//*
-            supportFragmentManager
-                .beginTransaction()
-                .replace(filmInformation.id, FilmInformationFragment())
-                .addToBackStack(null)
-                .commit()
-        }
-    }*/
 
     private fun checkForInternet(context: Context): Boolean {
         val connectivityManager =

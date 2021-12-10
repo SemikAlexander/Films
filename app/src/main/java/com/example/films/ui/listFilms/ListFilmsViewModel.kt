@@ -1,7 +1,9 @@
 package com.example.films.ui.listFilms
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.films.core.Status
 import com.example.films.core.ViewState
 import com.example.films.core.convertToFlowViewState
@@ -22,11 +24,12 @@ class ListFilmsViewModel @Inject constructor(
     val filmActionState = MutableLiveData<ViewState<FilmsDataClasses>>()
 
     fun getListFilms(language: String, page: Int) {
+        Log.d("TAG", "Test")
         listFilmsUseCaseFlow.getLatestFilms(language, page).convertToFlowViewState()
             .onStart { actionState.value = ViewState(Status.LOADING) }
             .onEach { actionState.value = it }
             .catch { actionState.value = ViewState(Status.ERROR, error = it) }
-            .launchIn(coroutineScope)
+            .launchIn(viewModelScope)
     }
 
     fun getFilmInfo(id: Int) {

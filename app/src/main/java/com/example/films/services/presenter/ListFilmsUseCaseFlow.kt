@@ -10,9 +10,10 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ListFilmsUseCaseFlow @Inject constructor(
-    private val dispatcherProvider: UseCaseDispatchers,
-    private val filmsAPI: API
+    private val dispatcherProvider: UseCaseDispatchers
     ) {
+
+    val filmsAPI = API.api
 
     fun getPopularFilms(language: String, page: Int): Flow<List<FilmsDataClasses>> {
         return flow {
@@ -24,10 +25,10 @@ class ListFilmsUseCaseFlow @Inject constructor(
 
     fun getLatestFilms(language: String, page: Int): Flow<List<FilmsDataClasses>> {
         return flow {
-            emit(filmsAPI.getLatestFilms(language = language, page = page))
-        }
-            .flowOn(dispatcherProvider.ioDispatcher)
-            .map { it.toList() }
+                emit(filmsAPI.getLatestFilms(language = language, page = page))
+            }
+                .flowOn(dispatcherProvider.ioDispatcher)
+                .map { it.toList() }
     }
 
     fun getTopRatedFilms(language: String, page: Int): Flow<List<FilmsDataClasses>> {
