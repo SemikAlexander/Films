@@ -3,12 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ListFilmsFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.listFilms.ListFilmsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_films"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:itemCount="5"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/films_recyclerview"/>
 
 </FrameLayout>

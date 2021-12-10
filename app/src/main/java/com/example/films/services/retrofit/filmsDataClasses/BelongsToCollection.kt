@@ -1,4 +1,4 @@
-package com.example.films.services.filmsDataClasses
+package com.example.films.services.retrofit.filmsDataClasses
 
 data class BelongsToCollection(
     val backdrop_path: String,

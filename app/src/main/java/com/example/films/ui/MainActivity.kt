@@ -7,10 +7,10 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.films.R
 import com.example.films.databinding.ActivityMainBinding
+import com.example.films.ui.listFilms.ListFilmsFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -53,6 +53,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    /*override fun onFilmSelected(film: FilmsDataClasses) {
+        binding.apply {
+
+            *//*val detailsFragment =
+                FilmInformationFragment.newInstance(FilmsDataClasses)*//*
+            supportFragmentManager
+                .beginTransaction()
+                .replace(filmInformation.id, FilmInformationFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+    }*/
 
     private fun checkForInternet(context: Context): Boolean {
         val connectivityManager =

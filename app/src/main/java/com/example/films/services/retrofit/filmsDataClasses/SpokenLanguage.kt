@@ -1,4 +1,4 @@
-package com.example.films.services.filmsDataClasses
+package com.example.films.services.retrofit.filmsDataClasses
 
 data class SpokenLanguage(
     val english_name: String,

@@ -8,22 +8,23 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.films.R
+import com.example.films.core.ViewState
 import com.example.films.databinding.FragmentFilmInformationBinding
-import com.example.films.services.retrofit.API
-import com.example.films.services.filmsDataClasses.filmsDataClasses
-import com.squareup.picasso.Picasso
+import com.example.films.services.retrofit.filmsDataClasses.FilmsDataClasses
+import com.example.films.ui.listFilms.ListFilmsViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 
 class FilmInformationFragment : Fragment() {
     private var _binding: FragmentFilmInformationBinding? = null
 
     private val binding get() = _binding!!
+
+    @Inject
+    lateinit var viewModel: ListFilmsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,9 +38,11 @@ class FilmInformationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.apply {
+        viewModel.filmActionState.observe({ lifecycle }, ::showDetailFilm)
+        viewModel.getFilmInfo(552)
+        /*binding.apply {
             getFilmInfo(551)
-        }
+        }*/
     }
 
     override fun onDestroyView() {
@@ -47,51 +50,36 @@ class FilmInformationFragment : Fragment() {
         _binding = null
     }
 
-    @DelicateCoroutinesApi
-    private fun getFilmInfo(idFilm: Int) {
-        GlobalScope.launch(Dispatchers.IO) {
-            try {
-                val answer = API.api.getFilmInfo(id = idFilm)
-                launch(Dispatchers.Main) {
-                    filmDataLoaded(answer)
-                }
-            } catch (e: Exception) {
-                launch(Dispatchers.Main) {
-                    filmDataLoaded(null)
-                }
-            }
-        }
-    }
-
     @SuppressLint("SimpleDateFormat")
-    private fun filmDataLoaded(film: filmsDataClasses?){
+    private fun showDetailFilm(state: ViewState<FilmsDataClasses>) {
         binding.apply {
-            if (film != null) {
-                nameFilm.text = film.title
-                descriptionFilm.text = film.overview
-                ratingFilm.rating = film.vote_average.toFloat()
+            if (state.data != null) {
+                nameFilm.text = state.data.title
+                descriptionFilm.text = state.data.overview
+                ratingFilm.rating = state.data.vote_average.toFloat()
 
-                val runtime = Date(film.runtime.toLong())
+                val runtime = Date(state.data.runtime.toLong())
                 val format = SimpleDateFormat("HH:mm")
                 runtimeFilm.text = format.format(runtime).toString()
 
                 var genresFilm = ""
-                for (i in film.genres.indices)
-                    genresFilm += "${film.genres[i].name}\n"
+                for (i in state.data.genres.indices)
+                    genresFilm += "${state.data.genres[i].name}\n"
 
                 filmGenres.text = genresFilm
 
                 var companies = ""
-                for (i in film.production_companies.indices)
-                    companies += "${film.production_companies[i].name}\n"
+                for (i in state.data.production_companies.indices)
+                    companies += "${state.data.production_companies[i].name}\n"
 
                 filmCompanies.text = companies
 
-                var url = "https://image.tmdb.org/t/p/w500${film.poster_path}"
-                Picasso.with(context).load(url).into(filmLogo)
+                var url = "https://image.tmdb.org/t/p/w500${state.data.poster_path}"
+                Glide.with(requireContext()).load(url).into(filmLogo)
 
-                url = "https://image.tmdb.org/t/p/w500${film.belongs_to_collection.backdrop_path}"
-                Picasso.with(context).load(url).into(backdropLogo)
+                url =
+                    "https://image.tmdb.org/t/p/w500${state.data.belongs_to_collection.backdrop_path}"
+                Glide.with(requireContext()).load(url).into(backdropLogo)
             } else {
                 errorImage.visibility = View.VISIBLE
                 filmDetailInformation.visibility = View.INVISIBLE

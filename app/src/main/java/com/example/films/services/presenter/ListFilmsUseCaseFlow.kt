@@ -1,7 +1,7 @@
 package com.example.films.services.presenter
 
 import com.example.films.core.UseCaseDispatchers
-import com.example.films.services.filmsDataClasses.filmsDataClasses
+import com.example.films.services.retrofit.filmsDataClasses.FilmsDataClasses
 import com.example.films.services.retrofit.API
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,7 +14,7 @@ class ListFilmsUseCaseFlow @Inject constructor(
     private val filmsAPI: API
     ) {
 
-    fun getPopularFilms(language: String, page: Int): Flow<List<filmsDataClasses>> {
+    fun getPopularFilms(language: String, page: Int): Flow<List<FilmsDataClasses>> {
         return flow {
             emit(filmsAPI.getPopularFilms(language = language, page = page))
         }
@@ -22,7 +22,7 @@ class ListFilmsUseCaseFlow @Inject constructor(
             .map { it.toList() }
     }
 
-    fun getLatestFilms(language: String, page: Int): Flow<List<filmsDataClasses>> {
+    fun getLatestFilms(language: String, page: Int): Flow<List<FilmsDataClasses>> {
         return flow {
             emit(filmsAPI.getLatestFilms(language = language, page = page))
         }
@@ -30,7 +30,7 @@ class ListFilmsUseCaseFlow @Inject constructor(
             .map { it.toList() }
     }
 
-    fun getTopRatedFilms(language: String, page: Int): Flow<List<filmsDataClasses>> {
+    fun getTopRatedFilms(language: String, page: Int): Flow<List<FilmsDataClasses>> {
         return flow {
             emit(filmsAPI.getTopRatedFilms(language = language, page = page))
         }
@@ -38,11 +38,18 @@ class ListFilmsUseCaseFlow @Inject constructor(
             .map { it.toList() }
     }
 
-    fun getUpcomingFilms(language: String, page: Int): Flow<List<filmsDataClasses>> {
+    fun getUpcomingFilms(language: String, page: Int): Flow<List<FilmsDataClasses>> {
         return flow {
             emit(filmsAPI.getUpcomingFilms(language = language, page = page))
         }
             .flowOn(dispatcherProvider.ioDispatcher)
             .map { it.toList() }
+    }
+
+    fun getFilmDetailInfo(idFilm: Int): Flow<FilmsDataClasses> {
+        return flow {
+            emit(filmsAPI.getFilmInfo(idFilm))
+        }
+            .flowOn(dispatcherProvider.ioDispatcher)
     }
 }

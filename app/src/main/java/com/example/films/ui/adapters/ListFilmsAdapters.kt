@@ -1,21 +1,21 @@
 package com.example.films.ui.adapters
 
-import android.content.Context
-import android.view.LayoutInflater.*
+import android.view.LayoutInflater.from
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.films.R
-import com.example.films.R.layout.*
-import com.example.films.services.filmsDataClasses.filmsDataClasses
+import com.example.films.R.layout.fragment_list_films
+import com.example.films.services.retrofit.filmsDataClasses.FilmsDataClasses
 
-class ListFilmsAdapters(private val values: List<filmsDataClasses>,
-                        private val listener: OnItemClickListener,
-                        private val context: Context) :
-    RecyclerView.Adapter<ListFilmsAdapters.MyViewHolder>()  {
+class ListFilmsAdapters(
+    private val listener: OnItemClickListener
+) : ListAdapter<FilmsDataClasses, ListFilmsAdapters.MyViewHolder>(FilmsDiffUtil) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -26,16 +26,13 @@ class ListFilmsAdapters(private val values: List<filmsDataClasses>,
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.titleFilm?.text = values[position].title
+        holder.titleFilm?.text = getItem(position).title
 
-        Glide.with(context).load(R.drawable.duck).into(holder.logoFilm)
-        holder.logoFilm.setImageResource(R.drawable.ic_launcher_foreground)
+        Glide.with(holder.itemView.context).load(R.drawable.duck).into(holder.logoFilm)
     }
 
-    override fun getItemCount() = values.size
-
-    inner class MyViewHolder(itemView: View)
-        : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
 
         var titleFilm: TextView? = null
         var logoFilm: ImageView = itemView.findViewById(R.id.film_logo_1)
@@ -46,7 +43,7 @@ class ListFilmsAdapters(private val values: List<filmsDataClasses>,
             itemView.setOnClickListener(this)
 
             logoFilm.setOnClickListener {
-                val position = adapterPosition
+                val position = absoluteAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     listener.onItemClick(position)
                 }
@@ -54,7 +51,7 @@ class ListFilmsAdapters(private val values: List<filmsDataClasses>,
         }
 
         override fun onClick(v: View?) {
-            val position = adapterPosition
+            val position = absoluteAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 listener.onItemClick(position)
             }
@@ -64,4 +61,13 @@ class ListFilmsAdapters(private val values: List<filmsDataClasses>,
     interface OnItemClickListener {
         fun onItemClick(position: Int)
     }
+}
+
+object FilmsDiffUtil : DiffUtil.ItemCallback<FilmsDataClasses>() {
+
+    override fun areItemsTheSame(oldItem: FilmsDataClasses, newItem: FilmsDataClasses): Boolean =
+        oldItem.id == newItem.id
+
+    override fun areContentsTheSame(oldItem: FilmsDataClasses, newItem: FilmsDataClasses): Boolean =
+        oldItem == newItem
 }
