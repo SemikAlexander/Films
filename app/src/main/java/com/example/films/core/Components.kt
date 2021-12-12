@@ -2,6 +2,9 @@ package com.example.films.core
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.films.ui.infoFilm.FilmInformationFragment
+import com.example.films.ui.infoFilm.InfoFilmViewModelFactory
+import com.example.films.ui.listFilms.InfoFilmViewModel
 import com.example.films.ui.listFilms.ListFilmViewModelFactory
 import com.example.films.ui.listFilms.ListFilmsFragment
 import com.example.films.ui.listFilms.ListFilmsViewModel
@@ -22,6 +25,7 @@ import kotlinx.coroutines.SupervisorJob
 interface LobbyComponent {
 
     fun inject(listFilmsFragment: ListFilmsFragment)
+    fun inject(filmInformationFragment: FilmInformationFragment)
 
     @Component.Factory
     interface FactoryFragment {
@@ -43,5 +47,12 @@ class LobbyModule {
     ) = ViewModelProvider(fragment, factory).get(ListFilmsViewModel::class.java)
 
     @Provides
-    fun provideCoroutineScope() = CoroutineScope(Dispatchers.Main.immediate + SupervisorJob())
+    fun provideFilmInfoViewModel(
+        fragment: Fragment,
+        factory: InfoFilmViewModelFactory
+    ) = ViewModelProvider(fragment, factory).get(InfoFilmViewModel::class.java)
+
+    @Provides
+    fun provideCoroutineScope() =
+        CoroutineScope(Dispatchers.Main.immediate + SupervisorJob())
 }

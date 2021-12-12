@@ -1,9 +1,7 @@
 package com.example.films.ui.listFilms
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.films.core.Status
 import com.example.films.core.ViewState
 import com.example.films.core.convertToFlowViewState
@@ -16,19 +14,17 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
-class ListFilmsViewModel @Inject constructor(
+class InfoFilmViewModel @Inject constructor(
     private val coroutineScope: CoroutineScope,
     private val listFilmsUseCaseFlow: ListFilmsUseCaseFlow
 ) : ViewModel() {
-    val actionState = MutableLiveData<ViewState<List<FilmsDataClasses>>>()
-    val filmActionState = MutableLiveData<ViewState<FilmsDataClasses>>()
+    val actionState = MutableLiveData<ViewState<FilmsDataClasses>>()
 
-    fun getListFilms(language: String, page: Int) {
-        Log.d("TAG", "Test")
-        listFilmsUseCaseFlow.getPopularFilms(language, page).convertToFlowViewState()
+    fun getFilmInfo(id: Int) {
+        listFilmsUseCaseFlow.getFilmDetailInfo(id).convertToFlowViewState()
             .onStart { actionState.value = ViewState(Status.LOADING) }
             .onEach { actionState.value = it }
             .catch { actionState.value = ViewState(Status.ERROR, error = it) }
-            .launchIn(viewModelScope)
+            .launchIn(coroutineScope)
     }
 }

@@ -6,26 +6,31 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+class Wrapper(
+    val results: List<FilmsDataClasses>,
+    val result: FilmsDataClasses
+)
+
 interface API {
     @GET("movie/{id}")
-    fun getFilmInfo(
+    suspend fun getFilmInfo(
         @Path("id") id: Int,
         @Query("api_key") key: String = apiToken
     ) : FilmsDataClasses
 
     @GET("movie/popular")
-    fun getPopularFilms(
+    suspend fun getPopularFilms(
         @Query("api_key") key: String = apiToken,
         @Query("language") language: String,
         @Query("page") page: Int
-    ) : List<FilmsDataClasses>
+    ) : Wrapper
 
     @GET("movie/latest")
     fun getLatestFilms(
         @Query("api_key") key: String = apiToken,
         @Query("language") language: String,
         @Query("page") page: Int
-    ) : List<FilmsDataClasses>
+    ) : FilmsDataClasses
 
     @GET("movie/top_rated")
     fun getTopRatedFilms(

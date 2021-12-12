@@ -1,4 +1,4 @@
-package com.example.films.ui
+package com.example.films.ui.infoFilm
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,23 +8,40 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.films.R
+import com.example.films.core.CoreModuleDependencies
+import com.example.films.core.DaggerLobbyComponent
 import com.example.films.core.ViewState
 import com.example.films.databinding.FragmentFilmInformationBinding
 import com.example.films.services.retrofit.filmsDataClasses.FilmsDataClasses
-import com.example.films.ui.listFilms.ListFilmsViewModel
+import com.example.films.ui.listFilms.InfoFilmViewModel
+import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.DelicateCoroutinesApi
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
 
-class FilmInformationFragment : Fragment() {
+class FilmInformationFragment(private val film: FilmsDataClasses) : Fragment() {
     private var _binding: FragmentFilmInformationBinding? = null
-
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var viewModel: ListFilmsViewModel
+    lateinit var viewModel: InfoFilmViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val coreModuleDependencies = EntryPointAccessors.fromApplication(
+            requireContext().applicationContext,
+            CoreModuleDependencies::class.java
+        )
+
+        DaggerLobbyComponent.factory().create(
+            coreComponentDependencies = coreModuleDependencies,
+            fragment = this
+        )
+            .inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,11 +55,8 @@ class FilmInformationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.filmActionState.observe({ lifecycle }, ::showDetailFilm)
-        viewModel.getFilmInfo(552)
-        /*binding.apply {
-            getFilmInfo(551)
-        }*/
+        viewModel.run { actionState.observe({lifecycle}, ::showDetailFilm) }
+        viewModel.getFilmInfo(film.id)
     }
 
     override fun onDestroyView() {
@@ -80,12 +94,12 @@ class FilmInformationFragment : Fragment() {
                 url =
                     "https://image.tmdb.org/t/p/w500${state.data.belongs_to_collection.backdrop_path}"
                 Glide.with(requireContext()).load(url).into(backdropLogo)
-            } else {
+            }/* else {
                 errorImage.visibility = View.VISIBLE
                 filmDetailInformation.visibility = View.INVISIBLE
 
                 Glide.with(requireContext()).load(R.drawable.duck).into(errorImage)
-            }
+            }*/
         }
     }
 }

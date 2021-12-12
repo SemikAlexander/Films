@@ -12,9 +12,7 @@ const val apiToken = "5b9dc5ac55c79590aeae7c3247e0b471"
 val retrofit: Retrofit by lazy {
     //logs
     val interceptor = HttpLoggingInterceptor()
-    interceptor.level =
-        if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
-        else HttpLoggingInterceptor.Level.NONE
+    interceptor.level = HttpLoggingInterceptor.Level.BODY
 
     //timeouts
     val client = OkHttpClient.Builder()

@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.films.core.CoreModuleDependencies
 import com.example.films.core.DaggerLobbyComponent
 import com.example.films.core.ViewState
 import com.example.films.databinding.FragmentListFilmsBinding
 import com.example.films.services.retrofit.filmsDataClasses.FilmsDataClasses
+import com.example.films.ui.MainActivity
 import com.example.films.ui.adapters.ListFilmsAdapters
 import dagger.hilt.android.EntryPointAccessors
 import javax.inject.Inject
@@ -19,7 +21,8 @@ class ListFilmsFragment : Fragment() {
     private val filmsAdapter by lazy(LazyThreadSafetyMode.PUBLICATION) {
         ListFilmsAdapters(object : ListFilmsAdapters.OnItemClickListener {
             override fun onItemClick(position: Int) {
-
+                val item = viewModel.actionState.value?.data?.getOrNull(position) ?: return
+                (requireActivity() as MainActivity).openFilm(item)
             }
         })
     }
@@ -58,7 +61,8 @@ class ListFilmsFragment : Fragment() {
         viewModel.run { actionState.observe({lifecycle}, ::showFilms) }
 
         binding.rvFilms.adapter = filmsAdapter
-        viewModel.getListFilms("ru", 1)
+        binding.rvFilms.layoutManager = GridLayoutManager(requireContext(), 3)
+        viewModel.getListFilms("en-US", 1)
     }
 
     private fun showFilms(state: ViewState<List<FilmsDataClasses>>) {

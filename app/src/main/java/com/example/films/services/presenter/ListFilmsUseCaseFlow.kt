@@ -1,5 +1,6 @@
 package com.example.films.services.presenter
 
+import android.util.Log
 import com.example.films.core.UseCaseDispatchers
 import com.example.films.services.retrofit.filmsDataClasses.FilmsDataClasses
 import com.example.films.services.retrofit.API
@@ -11,46 +12,46 @@ import javax.inject.Inject
 
 class ListFilmsUseCaseFlow @Inject constructor(
     private val dispatcherProvider: UseCaseDispatchers
-    ) {
+) {
 
-    val filmsAPI = API.api
+    private val filmsAPI = API.api
 
     fun getPopularFilms(language: String, page: Int): Flow<List<FilmsDataClasses>> {
-        return flow {
-            emit(filmsAPI.getPopularFilms(language = language, page = page))
-        }
-            .flowOn(dispatcherProvider.ioDispatcher)
-            .map { it.toList() }
-    }
-
-    fun getLatestFilms(language: String, page: Int): Flow<List<FilmsDataClasses>> {
-        return flow {
-                emit(filmsAPI.getLatestFilms(language = language, page = page))
+        try {
+            return flow {
+                emit(getListFilms(language, page))
             }
                 .flowOn(dispatcherProvider.ioDispatcher)
                 .map { it.toList() }
-    }
-
-    fun getTopRatedFilms(language: String, page: Int): Flow<List<FilmsDataClasses>> {
-        return flow {
-            emit(filmsAPI.getTopRatedFilms(language = language, page = page))
+        } catch (e: Exception) {
+            Log.e("api", "getLatestFilms", e)
+            throw e
         }
-            .flowOn(dispatcherProvider.ioDispatcher)
-            .map { it.toList() }
-    }
-
-    fun getUpcomingFilms(language: String, page: Int): Flow<List<FilmsDataClasses>> {
-        return flow {
-            emit(filmsAPI.getUpcomingFilms(language = language, page = page))
-        }
-            .flowOn(dispatcherProvider.ioDispatcher)
-            .map { it.toList() }
     }
 
     fun getFilmDetailInfo(idFilm: Int): Flow<FilmsDataClasses> {
-        return flow {
-            emit(filmsAPI.getFilmInfo(idFilm))
+        try {
+            return flow {
+                emit(getFilm(idFilm))
+            }
+                .flowOn(dispatcherProvider.ioDispatcher)
+        } catch (e: Exception) {
+            Log.e("api", "getFilmInfo", e)
+            throw e
         }
-            .flowOn(dispatcherProvider.ioDispatcher)
+    }
+
+    private suspend fun getListFilms(language: String, page: Int): List<FilmsDataClasses> = try {
+        filmsAPI.getPopularFilms(language = language, page = page).results
+    } catch (e: Exception) {
+        Log.e("api", "getLatestFilms", e)
+        throw e
+    }
+
+    private suspend fun getFilm(id: Int): FilmsDataClasses = try {
+        filmsAPI.getFilmInfo(id = id)
+    } catch (e: Exception) {
+        Log.e("api", "getFilmInfoError", e)
+        throw e
     }
 }

@@ -1,16 +1,14 @@
 package com.example.films.ui.adapters
 
-import android.view.LayoutInflater.from
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.films.R
-import com.example.films.R.layout.fragment_list_films
+import com.example.films.databinding.FilmsRecyclerviewBinding
 import com.example.films.services.retrofit.filmsDataClasses.FilmsDataClasses
 
 class ListFilmsAdapters(
@@ -21,28 +19,31 @@ class ListFilmsAdapters(
         parent: ViewGroup,
         viewType: Int
     ): MyViewHolder {
-        val itemView = from(parent.context).inflate(fragment_list_films, parent, false)
-        return MyViewHolder(itemView)
+        val inflater = LayoutInflater.from(parent.context)
+        return MyViewHolder(FilmsRecyclerviewBinding.inflate(inflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.titleFilm?.text = getItem(position).title
+        holder.binding.titleFilm1.text = getItem(position).title
 
-        Glide.with(holder.itemView.context).load(R.drawable.duck).into(holder.logoFilm)
+        if(getItem(position).poster_path != null)
+            Glide.with(holder.itemView.context)
+                .load("https://image.tmdb.org/t/p/w500${getItem(position).poster_path}")
+                .into(holder.binding.filmLogo1)
+        else
+            holder.binding.filmLogo1.setImageResource(R.drawable.ic_image_not_supported)
     }
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+    inner class MyViewHolder(
+        val binding: FilmsRecyclerviewBinding
+    ) :
+        RecyclerView.ViewHolder(binding.root),
         View.OnClickListener {
 
-        var titleFilm: TextView? = null
-        var logoFilm: ImageView = itemView.findViewById(R.id.film_logo_1)
-
         init {
-            titleFilm = itemView.findViewById(R.id.title_film_1)
-
             itemView.setOnClickListener(this)
 
-            logoFilm.setOnClickListener {
+            binding.filmLogo1.setOnClickListener {
                 val position = absoluteAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     listener.onItemClick(position)

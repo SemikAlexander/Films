@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.films.R
 import com.example.films.databinding.ActivityMainBinding
+import com.example.films.services.retrofit.filmsDataClasses.FilmsDataClasses
+import com.example.films.ui.infoFilm.FilmInformationFragment
 import com.example.films.ui.listFilms.ListFilmsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,6 +56,14 @@ class MainActivity : AppCompatActivity() {
                     .into(internetError)
             }
         }
+    }
+
+    fun openFilm(item: FilmsDataClasses) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(binding.filmInformation.id, FilmInformationFragment(item))
+            .commit()
+
     }
 
     private fun checkForInternet(context: Context): Boolean {
