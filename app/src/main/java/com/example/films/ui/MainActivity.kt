@@ -10,9 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.films.R
 import com.example.films.databinding.ActivityMainBinding
-import com.example.films.services.retrofit.filmsDataClasses.FilmsDataClasses
-import com.example.films.ui.infoFilm.FilmInformationFragment
-import com.example.films.ui.listFilms.ListFilmsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,17 +22,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.apply {
-            refreshActivity()
-        }
+        refreshActivity()
     }
 
     override fun onStart() {
         super.onStart()
 
-        binding.apply {
-            refreshButton.setOnClickListener { refreshActivity() }
-        }
+        binding.refreshButton.setOnClickListener { refreshActivity() }
     }
 
     private fun refreshActivity() {
@@ -44,11 +37,6 @@ class MainActivity : AppCompatActivity() {
                 noInternetInfo.visibility = View.INVISIBLE
                 filmInformation.visibility = View.VISIBLE
 
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(filmInformation.id, ListFilmsFragment())
-                    /*.replace(filmInformation.id, FilmInformationFragment())*/
-                    .commit()
             } else {
                 filmInformation.visibility = View.INVISIBLE
                 Glide.with(this@MainActivity)
@@ -56,14 +44,6 @@ class MainActivity : AppCompatActivity() {
                     .into(internetError)
             }
         }
-    }
-
-    fun openFilm(item: FilmsDataClasses) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(binding.filmInformation.id, FilmInformationFragment(item))
-            .commit()
-
     }
 
     private fun checkForInternet(context: Context): Boolean {

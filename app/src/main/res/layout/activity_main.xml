@@ -8,7 +8,10 @@
     tools:context=".ui.MainActivity"
     android:background="@color/background_color">
 
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/films_graph"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:id="@+id/film_information"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

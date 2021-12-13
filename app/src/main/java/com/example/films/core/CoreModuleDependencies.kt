@@ -1,12 +1,10 @@
 package com.example.films.core
 
-import android.content.Context
-import com.example.films.services.presenter.ListFilmsUseCaseFlow
+import com.example.films.services.usecase.ListFilmsUseCaseFlow
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

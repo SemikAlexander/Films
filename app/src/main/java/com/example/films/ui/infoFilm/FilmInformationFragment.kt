@@ -7,21 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.example.films.R
 import com.example.films.core.CoreModuleDependencies
 import com.example.films.core.DaggerLobbyComponent
 import com.example.films.core.ViewState
 import com.example.films.databinding.FragmentFilmInformationBinding
-import com.example.films.services.retrofit.filmsDataClasses.FilmsDataClasses
+import com.example.films.services.retrofit.filmsDataClasses.Film
 import com.example.films.ui.listFilms.InfoFilmViewModel
+import com.google.gson.Gson
 import dagger.hilt.android.EntryPointAccessors
-import kotlinx.coroutines.DelicateCoroutinesApi
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-
-class FilmInformationFragment(private val film: FilmsDataClasses) : Fragment() {
+class FilmInformationFragment() : Fragment() {
     private var _binding: FragmentFilmInformationBinding? = null
     private val binding get() = _binding!!
 
@@ -51,12 +49,14 @@ class FilmInformationFragment(private val film: FilmsDataClasses) : Fragment() {
         return binding.root
     }
 
-    @DelicateCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.run { actionState.observe({lifecycle}, ::showDetailFilm) }
-        viewModel.getFilmInfo(film.id)
+        viewModel.actionState.observe({ lifecycle }, ::showDetailFilm)
+        arguments
+            ?.getString("film")
+            ?.let { Gson().fromJson(it, Film::class.java) }
+            ?.let { viewModel.getFilmInfo(it.id) }
     }
 
     override fun onDestroyView() {
@@ -65,8 +65,8 @@ class FilmInformationFragment(private val film: FilmsDataClasses) : Fragment() {
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun showDetailFilm(state: ViewState<FilmsDataClasses>) {
-        binding.apply {
+    private fun showDetailFilm(state: ViewState<Film>) {
+        binding.run {
             if (state.data != null) {
                 nameFilm.text = state.data.title
                 descriptionFilm.text = state.data.overview
@@ -94,12 +94,7 @@ class FilmInformationFragment(private val film: FilmsDataClasses) : Fragment() {
                 url =
                     "https://image.tmdb.org/t/p/w500${state.data.belongs_to_collection.backdrop_path}"
                 Glide.with(requireContext()).load(url).into(backdropLogo)
-            }/* else {
-                errorImage.visibility = View.VISIBLE
-                filmDetailInformation.visibility = View.INVISIBLE
-
-                Glide.with(requireContext()).load(R.drawable.duck).into(errorImage)
-            }*/
+            }
         }
     }
 }

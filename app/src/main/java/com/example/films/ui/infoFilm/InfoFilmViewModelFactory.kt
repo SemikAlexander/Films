@@ -2,7 +2,7 @@ package com.example.films.ui.infoFilm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.films.services.presenter.ListFilmsUseCaseFlow
+import com.example.films.services.usecase.ListFilmsUseCaseFlow
 import com.example.films.ui.listFilms.InfoFilmViewModel
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject

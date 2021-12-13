@@ -1,6 +1,6 @@
 package com.example.films.services.retrofit.filmsDataClasses
 
-data class FilmsDataClasses(
+data class Film(
     val adult: Boolean,
     val backdrop_path: String,
     val belongs_to_collection: BelongsToCollection,

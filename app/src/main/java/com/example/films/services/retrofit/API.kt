@@ -1,14 +1,13 @@
 package com.example.films.services.retrofit
 
-import com.example.films.services.retrofit.filmsDataClasses.FilmsDataClasses
+import com.example.films.services.retrofit.filmsDataClasses.Film
 import retrofit2.create
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 class Wrapper(
-    val results: List<FilmsDataClasses>,
-    val result: FilmsDataClasses
+    val results: List<Film>
 )
 
 interface API {
@@ -16,7 +15,7 @@ interface API {
     suspend fun getFilmInfo(
         @Path("id") id: Int,
         @Query("api_key") key: String = apiToken
-    ) : FilmsDataClasses
+    ) : Film
 
     @GET("movie/popular")
     suspend fun getPopularFilms(
@@ -25,26 +24,44 @@ interface API {
         @Query("page") page: Int
     ) : Wrapper
 
+    @GET("search/movie")
+    suspend fun getPopularFilmsSearch(
+        @Query("api_key") key: String = apiToken,
+        @Query("language") language: String,
+        @Query("page") page: Int,
+        @Query("query") name: String
+    ) : Wrapper
+
+
+    @GET("movie/{id}")
+    suspend fun searchFilm(
+        @Query("api_key") key: String = apiToken,
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int,
+        @Query("include_adult") adult: Boolean = false,
+        @Path("query") name: String
+    ) : Wrapper
+
     @GET("movie/latest")
     fun getLatestFilms(
         @Query("api_key") key: String = apiToken,
         @Query("language") language: String,
         @Query("page") page: Int
-    ) : FilmsDataClasses
+    ) : Film
 
     @GET("movie/top_rated")
     fun getTopRatedFilms(
         @Query("api_key") key: String = apiToken,
         @Query("language") language: String,
         @Query("page") page: Int
-    ) : List<FilmsDataClasses>
+    ) : List<Film>
 
     @GET("movie/upcoming")
     fun getUpcomingFilms(
         @Query("api_key") key: String = apiToken,
         @Query("language") language: String,
         @Query("page") page: Int
-    ) : List<FilmsDataClasses>
+    ) : List<Film>
 
     companion object {
         val api by lazy { retrofit.create<API>() }

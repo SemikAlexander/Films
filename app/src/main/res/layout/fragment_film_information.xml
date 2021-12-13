@@ -23,7 +23,7 @@
         <ImageView
             android:id="@+id/backdrop_logo"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="230dp"
             android:foreground="@drawable/gradient_shape"
             android:scaleType="centerCrop"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />

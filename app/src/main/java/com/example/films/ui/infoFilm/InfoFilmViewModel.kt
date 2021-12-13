@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import com.example.films.core.Status
 import com.example.films.core.ViewState
 import com.example.films.core.convertToFlowViewState
-import com.example.films.services.presenter.ListFilmsUseCaseFlow
-import com.example.films.services.retrofit.filmsDataClasses.FilmsDataClasses
+import com.example.films.services.usecase.ListFilmsUseCaseFlow
+import com.example.films.services.retrofit.filmsDataClasses.Film
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
@@ -18,7 +18,7 @@ class InfoFilmViewModel @Inject constructor(
     private val coroutineScope: CoroutineScope,
     private val listFilmsUseCaseFlow: ListFilmsUseCaseFlow
 ) : ViewModel() {
-    val actionState = MutableLiveData<ViewState<FilmsDataClasses>>()
+    val actionState = MutableLiveData<ViewState<Film>>()
 
     fun getFilmInfo(id: Int) {
         listFilmsUseCaseFlow.getFilmDetailInfo(id).convertToFlowViewState()
