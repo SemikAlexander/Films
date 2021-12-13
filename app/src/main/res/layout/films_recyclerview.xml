@@ -27,11 +27,12 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/film_logo_1"
+            android:layout_marginBottom="10dp"
             android:layout_centerHorizontal="true"
-            android:textSize="15sp"
-            android:textColor="@color/white"
+            android:text="The Poseidon Adventure"
             android:textAlignment="center"
-            android:text="The Poseidon Adventure"/>
+            android:textColor="@color/white"
+            android:textSize="15sp" />
 
     </RelativeLayout>
 

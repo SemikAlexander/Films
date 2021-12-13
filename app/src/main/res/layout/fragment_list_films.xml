@@ -14,7 +14,10 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="Name"
-        tools:ignore="HardcodedText" />
+        tools:ignore="HardcodedText"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="5dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_films"
