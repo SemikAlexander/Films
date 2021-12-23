@@ -9,18 +9,23 @@
     android:background="@color/background_color">
 
     <androidx.fragment.app.FragmentContainerView
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/films_graph"
-        android:name="androidx.navigation.fragment.NavHostFragment"
         android:id="@+id/film_information"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="UselessParent"/>
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/films_graph"
+        tools:ignore="UselessParent" />
 
     <RelativeLayout
         android:id="@+id/no_internet_info"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="invisible">
 
         <ImageView
             android:id="@+id/internet_error"
@@ -41,5 +46,19 @@
             android:textSize="20sp" />
 
     </RelativeLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bottom_navigation_design"
+        app:itemIconSize="33.32dp"
+        app:itemIconTint="@drawable/tab_color"
+        app:itemTextColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_nav_menu"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

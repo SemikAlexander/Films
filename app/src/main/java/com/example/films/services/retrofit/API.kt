@@ -1,6 +1,7 @@
 package com.example.films.services.retrofit
 
 import com.example.films.services.retrofit.filmsDataClasses.Film
+import com.example.films.services.retrofit.filmsDataClasses.Genre
 import retrofit2.create
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -62,6 +63,12 @@ interface API {
         @Query("language") language: String,
         @Query("page") page: Int
     ) : List<Film>
+
+    @GET("genre/movie/list")
+    fun getGenres(
+        @Query("api_key") key: String = apiToken,
+        @Query("language") language: String
+    ) : List<Genre>
 
     companion object {
         val api by lazy { retrofit.create<API>() }

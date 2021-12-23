@@ -56,7 +56,5 @@ class FilmsDataSource(
         } catch (e: Exception) {
             LoadResult.Error(e)
         }
-
     }
-
 }

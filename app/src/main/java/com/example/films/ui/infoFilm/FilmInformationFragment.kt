@@ -77,16 +77,44 @@ class FilmInformationFragment() : Fragment() {
                 runtimeFilm.text = format.format(runtime).toString()
 
                 var genresFilm = ""
-                for (i in state.data.genres.indices)
-                    genresFilm += "${state.data.genres[i].name}\n"
+                for (i in state.data.genres.indices) {
+                    genresFilm += if (i != state.data.genres.size - 1)
+                        "${state.data.genres[i].name}, "
+                    else
+                        state.data.genres[i].name
+                }
 
                 filmGenres.text = genresFilm
 
                 var companies = ""
-                for (i in state.data.production_companies.indices)
-                    companies += "${state.data.production_companies[i].name}\n"
+                for (i in state.data.production_companies.indices) {
+                    companies += if (i != state.data.production_companies.size - 1)
+                        "${state.data.production_companies[i].name}, "
+                    else
+                        state.data.production_companies[i].name
+                }
 
                 filmCompanies.text = companies
+
+                var countries = ""
+                for (i in state.data.production_countries.indices) {
+                    countries += if (i != state.data.production_countries.size - 1)
+                        "${state.data.production_countries[i].name}, "
+                    else
+                        state.data.production_countries[i].name
+                }
+
+                filmCountries.text = countries
+
+                var languages = ""
+                for (i in state.data.spoken_languages.indices) {
+                    languages += if (i != state.data.spoken_languages.size - 1)
+                        "${state.data.spoken_languages[i].name}, "
+                    else
+                        state.data.spoken_languages[i].name
+                }
+
+                filmLanguages.text = languages
 
                 var url = "https://image.tmdb.org/t/p/w500${state.data.poster_path}"
                 Glide.with(requireContext()).load(url).into(filmLogo)

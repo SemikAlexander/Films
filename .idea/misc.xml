@@ -3,10 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.12228260869565218" />
+        <entry key="app/src/main/res/drawable/bottom_navigation_design.xml" value="0.24270833333333333" />
+        <entry key="app/src/main/res/drawable/ic_filter.xml" value="0.24270833333333333" />
+        <entry key="app/src/main/res/drawable/ic_keyboard_arrow_left.xml" value="0.24270833333333333" />
+        <entry key="app/src/main/res/drawable/ic_keyboard_arrow_left_enabled.xml" value="0.24270833333333333" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.2296875" />
+        <entry key="app/src/main/res/drawable/rounding_search.xml" value="0.2296875" />
+        <entry key="app/src/main/res/drawable/tab_color.xml" value="0.24270833333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2236495138225453" />
+        <entry key="app/src/main/res/layout/bottom_sheet_dialog.xml" value="0.2265625" />
         <entry key="app/src/main/res/layout/films_recyclerview.xml" value="0.18704710144927536" />
-        <entry key="app/src/main/res/layout/fragment_film_information.xml" value="0.12228260869565218" />
-        <entry key="app/src/main/res/layout/fragment_list_films.xml" value="0.1644021739130435" />
+        <entry key="app/src/main/res/layout/fragment_film_information.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_list_films.xml" value="0.17678887545262864" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.2265625" />
       </map>
     </option>
   </component>

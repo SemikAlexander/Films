@@ -75,14 +75,21 @@ class ListFilmsFragment : Fragment() {
             }
         } catch (e: Exception) {
         }
+        binding.run {
+            search.doOnTextChanged { text, _, _, _ ->
+                viewModel.search = text.toString()
+                filmsAdapter.refresh()
 
-        binding.search.doOnTextChanged { text, _, _, _ ->
-            viewModel.search = text.toString()
-            filmsAdapter.refresh()
+                clearText.visibility = View.VISIBLE
+            }
+
+            clearText.setOnClickListener {
+                search.text.clear()
+                clearText.visibility = View.INVISIBLE
+            }
+
+            rvFilms.adapter = filmsAdapter
+            rvFilms.layoutManager = GridLayoutManager(requireContext(), 3)
         }
-
-        binding.rvFilms.adapter = filmsAdapter
-        binding.rvFilms.layoutManager = GridLayoutManager(requireContext(), 3)
     }
-
 }
