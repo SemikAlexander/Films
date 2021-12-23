@@ -10,11 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.films.R
+import com.example.films.R.id.action_listFilmsFragment_to_filmInformationFragment
 import com.example.films.core.CoreModuleDependencies
 import com.example.films.core.DaggerLobbyComponent
 import com.example.films.databinding.FragmentListFilmsBinding
-import com.example.films.ui.MainActivity
 import com.example.films.ui.adapters.FilmsAdapter
 import com.google.gson.Gson
 import dagger.hilt.android.EntryPointAccessors
@@ -27,9 +26,10 @@ class ListFilmsFragment : Fragment() {
 
     private val filmsAdapter by lazy(LazyThreadSafetyMode.PUBLICATION) {
         FilmsAdapter {
-            findNavController().navigate(R.id.action_listFilmsFragment_to_filmInformationFragment, bundleOf(
-                "film" to Gson().toJson(it)
-            ))
+            findNavController()
+                .navigate(action_listFilmsFragment_to_filmInformationFragment, bundleOf(
+                    "film" to Gson().toJson(it)
+                ))
         }
     }
 
@@ -80,7 +80,8 @@ class ListFilmsFragment : Fragment() {
                 viewModel.search = text.toString()
                 filmsAdapter.refresh()
 
-                clearText.visibility = View.VISIBLE
+                if (text!!.isNotEmpty())
+                    clearText.visibility = View.VISIBLE
             }
 
             clearText.setOnClickListener {
